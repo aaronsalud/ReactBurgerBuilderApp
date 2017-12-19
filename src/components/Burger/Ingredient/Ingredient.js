@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classes from './Ingredient.css';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 class Ingredient extends Component {
 
@@ -40,8 +40,8 @@ class Ingredient extends Component {
 
 }
 
-Ingredient.PropTypes = {
-    type: PropTypes.string.isRequired
+Ingredient.propTypes = {
+    type: propTypes.string.isRequired
 }
 
 export default Ingredient;
