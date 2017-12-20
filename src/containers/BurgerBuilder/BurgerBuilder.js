@@ -29,6 +29,10 @@ class BurgerBuilder extends Component {
         this.setState({ checkingOut: true });
     }
 
+    purchaseCancelHandler = () =>{
+        this.setState({checkingOut: false});
+    }
+
     updateCheckoutState(ingredients) {
         const sum = Object.keys(ingredients)
             .map(key => {
@@ -91,7 +95,7 @@ class BurgerBuilder extends Component {
         }
         return (
             <Wrapper>
-                <Modal show={this.state.checkingOut}>
+                <Modal show={this.state.checkingOut} modalClosed={this.purchaseCancelHandler}>
                     <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
