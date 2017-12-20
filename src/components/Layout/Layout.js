@@ -12,8 +12,5 @@ const layout = (props) => (
             {props.children}
         </main>
     </Wrapper>
- 
 );
-
 export default layout;
-
