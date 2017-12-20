@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Wrapper from '../../../hoc/Wrapper';
 import Button from '../../UI/Button/Button';
 
-const orderSummary = (props) => {
-    const ingredientSummary = Object.keys(props.ingredients)
-        .map(key => {
-            return (
-                <li key={key}>
-                    <span style={{ textTransform: 'capitalize' }}>{key} </span>: {props.ingredients[key]}
-                </li>
-            );
-        })
+class OrderSummary extends Component {
+    // This could be a functional component, does not have to be a class
+    render() {
+        const ingredientSummary = Object.keys(this.props.ingredients)
+            .map(key => {
+                return (
+                    <li key={key}>
+                        <span style={{ textTransform: 'capitalize' }}>{key} </span>: {this.props.ingredients[key]}
+                    </li>
+                );
+            })
 
-    return (
-        <Wrapper>
-            <h3>Your Order</h3>
-            <p>A delicious burger with the following ingredients:</p>
-            <ul>
-                {ingredientSummary}
-            </ul>
-            <p><strong>Total Price:</strong> {props.price.toFixed(2)}</p>
-            <p>Continue to checkout?</p>
-            <Button btnType="Danger" clicked={props.purchaseCancelled}>Cancel</Button>
-            <Button btnType="Success" clicked={props.purchaseContinued}>Continue</Button>
-        </Wrapper>
-    );
+        return (
+            <Wrapper>
+                <h3>Your Order</h3>
+                <p>A delicious burger with the following ingredients:</p>
+                <ul>
+                    {ingredientSummary}
+                </ul>
+                <p><strong>Total Price:</strong> {this.props.price.toFixed(2)}</p>
+                <p>Continue to checkout?</p>
+                <Button btnType="Danger" clicked={this.props.purchaseCancelled}>Cancel</Button>
+                <Button btnType="Success" clicked={this.props.purchaseContinued}>Continue</Button>
+            </Wrapper>
+        );
+    }
 };
 
-export default orderSummary;
+export default OrderSummary;
