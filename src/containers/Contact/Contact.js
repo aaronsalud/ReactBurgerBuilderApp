@@ -14,6 +14,9 @@ class Contact extends Component {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
+                validation: {
+                    required: true
+                },
                 value: ''
             },
             email: {
@@ -21,6 +24,9 @@ class Contact extends Component {
                 config: {
                     type: 'text',
                     placeholder: 'Your Email'
+                },
+                validation: {
+                    required: true
                 },
                 value: ''
             },
@@ -30,6 +36,9 @@ class Contact extends Component {
                     type: 'text',
                     placeholder: 'Your Street'
                 },
+                validation: {
+                    required: true
+                },
                 value: ''
             },
             postal: {
@@ -38,6 +47,11 @@ class Contact extends Component {
                     type: 'text',
                     placeholder: 'Your Postal'
                 },
+                validation: {
+                    required: true,
+                    minLength: 7,
+                    maxLength: 7
+                },
                 value: ''
             },
             country: {
@@ -45,6 +59,10 @@ class Contact extends Component {
                 config: {
                     type: 'text',
                     placeholder: 'Your Country'
+                },
+                validation: {
+                    required: true,
+                    valid: true
                 },
                 value: ''
             },
@@ -56,10 +74,28 @@ class Contact extends Component {
                         { value: 'cheapest', label: 'Cheapest' }
                     ]
                 },
-                value: ''
+                value: 'fastest'
             }
         },
         loading: false
+    }
+
+    checkValidity(value, rules) {
+        let isValid = true;
+
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if(rules.minLength){
+            isValid = value.length >= rules.minLength && isValid;
+        }
+
+        if(rules.maxLength){
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        return isValid;
     }
 
     orderHandler = (event) => {
@@ -100,15 +136,14 @@ class Contact extends Component {
         };
 
         updatedFormElement.value = event.target.value;
+        updatedFormElement.validation.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-
+        console.log(updatedFormElement);
         this.setState({ orderForm: updatedOrderForm });
     }
 
     render() {
-
         const formElementsArray = [];
-
         for (let key in this.state.orderForm) {
             formElementsArray.push(
                 {
