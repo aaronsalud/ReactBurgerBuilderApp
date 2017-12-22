@@ -15,8 +15,9 @@ class Contact extends Component {
                     placeholder: 'Your Name'
                 },
                 validation: {
-                    required: true
+                    required: true, 
                 },
+                valid: false,
                 value: ''
             },
             email: {
@@ -26,8 +27,9 @@ class Contact extends Component {
                     placeholder: 'Your Email'
                 },
                 validation: {
-                    required: true
+                    required: true,
                 },
+                valid: false,
                 value: ''
             },
             street: {
@@ -37,8 +39,9 @@ class Contact extends Component {
                     placeholder: 'Your Street'
                 },
                 validation: {
-                    required: true
+                    required: true,
                 },
+                valid: false,
                 value: ''
             },
             postal: {
@@ -49,9 +52,10 @@ class Contact extends Component {
                 },
                 validation: {
                     required: true,
-                    minLength: 7,
-                    maxLength: 7
+                    minLength: 6,
+                    maxLength: 6,
                 },
+                valid: false,
                 value: ''
             },
             country: {
@@ -62,8 +66,8 @@ class Contact extends Component {
                 },
                 validation: {
                     required: true,
-                    valid: true
                 },
+                valid: false,
                 value: ''
             },
             deliveryMethod: {
@@ -136,7 +140,7 @@ class Contact extends Component {
         };
 
         updatedFormElement.value = event.target.value;
-        updatedFormElement.validation.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         console.log(updatedFormElement);
         this.setState({ orderForm: updatedOrderForm });
@@ -158,7 +162,10 @@ class Contact extends Component {
                 {formElementsArray.map(formElement => (
                     <Input key={formElement.id} elementType={formElement.elementConfig.type}
                         elementConfig={formElement.elementConfig.config}
-                        value={formElement.elementConfig.value} onChangeHandler={event => this.inputChangedHandler(event, formElement.id)} />
+                        value={formElement.elementConfig.value} 
+                        onChangeHandler={event => this.inputChangedHandler(event, formElement.id)} 
+                        invalid={!formElement.elementConfig.valid}
+                        shouldValidate={formElement.elementConfig.validation}/>
                 ))}
                 <Button btnType="Success">Order</Button>
             </form>
