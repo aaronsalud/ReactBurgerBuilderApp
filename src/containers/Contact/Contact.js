@@ -52,8 +52,8 @@ class Contact extends Component {
                 type: 'select',
                 config: {
                     options: [
-                        {value: 'fastest', label: 'Fastest'},
-                        {value: 'cheapest', label: 'Cheapest'}
+                        { value: 'fastest', label: 'Fastest' },
+                        { value: 'cheapest', label: 'Cheapest' }
                     ]
                 },
                 value: ''
