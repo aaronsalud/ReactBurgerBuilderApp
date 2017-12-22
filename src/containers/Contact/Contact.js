@@ -15,7 +15,7 @@ class Contact extends Component {
                     placeholder: 'Your Name'
                 },
                 validation: {
-                    required: true, 
+                    required: true,
                 },
                 touched: false,
                 valid: false,
@@ -83,24 +83,30 @@ class Contact extends Component {
                         { value: 'cheapest', label: 'Cheapest' }
                     ]
                 },
-                value: 'fastest'
+                value: 'fastest',
+                valid:true
             }
         },
-        loading: false
+        loading: false,
+        formIsValid: false,
     }
 
     checkValidity(value, rules) {
         let isValid = true;
 
+        if(!rules){
+            return isValid;
+        }
+
         if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
 
-        if(rules.minLength){
+        if (rules.minLength) {
             isValid = value.length >= rules.minLength && isValid;
         }
 
-        if(rules.maxLength){
+        if (rules.maxLength) {
             isValid = value.length <= rules.maxLength && isValid;
         }
 
@@ -134,7 +140,6 @@ class Contact extends Component {
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
-
         // Do a deep clone of form element
         const updatedOrderForm = {
             ...this.state.orderForm
@@ -148,7 +153,14 @@ class Contact extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        this.setState({ orderForm: updatedOrderForm });
+
+        let formIsValid = true;
+
+        for (let key in updatedOrderForm) {
+            formIsValid = updatedOrderForm[key]['valid'] && formIsValid;
+        }
+
+        this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
     }
 
     render() {
@@ -167,13 +179,13 @@ class Contact extends Component {
                 {formElementsArray.map(formElement => (
                     <Input key={formElement.id} elementType={formElement.elementConfig.type}
                         elementConfig={formElement.elementConfig.config}
-                        value={formElement.elementConfig.value} 
-                        onChangeHandler={event => this.inputChangedHandler(event, formElement.id)} 
+                        value={formElement.elementConfig.value}
+                        onChangeHandler={event => this.inputChangedHandler(event, formElement.id)}
                         invalid={!formElement.elementConfig.valid}
                         shouldValidate={formElement.elementConfig.validation}
-                        touched={formElement.elementConfig.touched}/>
+                        touched={formElement.elementConfig.touched} />
                 ))}
-                <Button btnType="Success">Order</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>Order</Button>
             </form>
         );
 
