@@ -17,6 +17,7 @@ class Contact extends Component {
                 validation: {
                     required: true, 
                 },
+                touched: false,
                 valid: false,
                 value: ''
             },
@@ -29,6 +30,7 @@ class Contact extends Component {
                 validation: {
                     required: true,
                 },
+                touched: false,
                 valid: false,
                 value: ''
             },
@@ -41,6 +43,7 @@ class Contact extends Component {
                 validation: {
                     required: true,
                 },
+                touched: false,
                 valid: false,
                 value: ''
             },
@@ -55,6 +58,7 @@ class Contact extends Component {
                     minLength: 6,
                     maxLength: 6,
                 },
+                touched: false,
                 valid: false,
                 value: ''
             },
@@ -67,6 +71,7 @@ class Contact extends Component {
                 validation: {
                     required: true,
                 },
+                touched: false,
                 valid: false,
                 value: ''
             },
@@ -141,6 +146,7 @@ class Contact extends Component {
 
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         console.log(updatedFormElement);
         this.setState({ orderForm: updatedOrderForm });
@@ -165,7 +171,8 @@ class Contact extends Component {
                         value={formElement.elementConfig.value} 
                         onChangeHandler={event => this.inputChangedHandler(event, formElement.id)} 
                         invalid={!formElement.elementConfig.valid}
-                        shouldValidate={formElement.elementConfig.validation}/>
+                        shouldValidate={formElement.elementConfig.validation}
+                        touched={formElement.elementConfig.touched}/>
                 ))}
                 <Button btnType="Success">Order</Button>
             </form>
