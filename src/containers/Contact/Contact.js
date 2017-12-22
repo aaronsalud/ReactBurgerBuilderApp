@@ -64,12 +64,20 @@ class Contact extends Component {
 
     orderHandler = (event) => {
         event.preventDefault();
-
         this.setState({ loading: true });
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.price,
+
+        const formData = {};
+
+        for (let key in this.state.orderForm) {
+            formData[key] = this.state.orderForm[key]['value'];
         }
+
+        const order = {
+            ingredients: this.props.ingredients,
+            price: this.props.price,
+            orderData: formData
+        }
+
         axios.post('/orders.json', order)
             .then(response => {
                 this.setState({ loading: false });
@@ -80,7 +88,7 @@ class Contact extends Component {
             });
     }
 
-    inputChangedHandler = (event, inputIdentifier) =>{
+    inputChangedHandler = (event, inputIdentifier) => {
 
         // Do a deep clone of form element
         const updatedOrderForm = {
@@ -94,7 +102,7 @@ class Contact extends Component {
         updatedFormElement.value = event.target.value;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-        this.setState({orderForm: updatedOrderForm});
+        this.setState({ orderForm: updatedOrderForm });
     }
 
     render() {
@@ -111,13 +119,13 @@ class Contact extends Component {
         }
 
         let form = (
-            <form action="">
+            <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
                     <Input key={formElement.id} elementType={formElement.elementConfig.type}
                         elementConfig={formElement.elementConfig.config}
-                        value={formElement.elementConfig.value} onChangeHandler={event => this.inputChangedHandler(event, formElement.id)}/>
+                        value={formElement.elementConfig.value} onChangeHandler={event => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success" clicked={this.orderHandler}>Order</Button>
+                <Button btnType="Success">Order</Button>
             </form>
         );
 
