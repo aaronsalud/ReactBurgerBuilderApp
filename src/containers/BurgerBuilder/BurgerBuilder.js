@@ -18,7 +18,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
- 
+        this.props.onInitIngredients();
     }
     purchaseHandler = () => {
         this.setState({ checkingOut: true });
@@ -54,7 +54,7 @@ class BurgerBuilder extends Component {
         }
 
         let orderSummary = null;
-        let burger = this.state.error ? <p>Failed to fetch ingredients</p> : <Spinner />;
+        let burger = this.props.error ? <p>Failed to fetch ingredients</p> : <Spinner />;
 
         if (this.props.ingredients) {
             burger = (
@@ -92,14 +92,16 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        totalPrice: state.totalPrice,
+        error: state.error
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onIngredientAdded: (ingredient) => dispatch(actions.addIngredient(ingredient)),
-        onIngredientRemoved: (ingredient) => dispatch(actions.removeIngredient(ingredient))
+        onIngredientRemoved: (ingredient) => dispatch(actions.removeIngredient(ingredient)),
+        onInitIngredients: () => dispatch(actions.initIngredients())
     }
 };
 
