@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Button from '../../components/UI/Button/Button';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Contact.css';
 import Input from '../../components/UI/Input/Input';
+import withErrorHandler from '../../components/HOC/withErrorHandler/withErrorHandler';
 
 class Contact extends Component {
     state = {
@@ -85,7 +86,7 @@ class Contact extends Component {
                     ]
                 },
                 value: 'fastest',
-                valid:true
+                valid: true
             }
         },
         loading: false,
@@ -95,7 +96,7 @@ class Contact extends Component {
     checkValidity(value, rules) {
         let isValid = true;
 
-        if(!rules){
+        if (!rules) {
             return isValid;
         }
 
@@ -130,14 +131,7 @@ class Contact extends Component {
             orderData: formData
         }
 
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({ loading: false });
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                this.setState({ loading: false });
-            });
+
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
@@ -206,8 +200,8 @@ class Contact extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price : state.totalPrice
+        price: state.totalPrice
     }
 }
 
-export default connect(mapStateToProps)(Contact);
+export default connect(mapStateToProps)(withErrorHandler(Contact));
