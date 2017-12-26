@@ -9,14 +9,14 @@ export const purchaseBurgerSuccess = (id, orderData) => {
     }
 }
 
-export const purchaseBurgerFailed = (error) => {
+export const purchaseBurgerFailed = error => {
     return {
         type: actionTypes.PURCHASE_BURGER_FAILED,
         error: error
     }
 }
 
-export const purchaseBurgerStart = (orderData) => {
+export const purchaseBurgerStart = orderData => {
     return dispatch => {
         axios.post('/orders.json', orderData)
             .then(response => {
