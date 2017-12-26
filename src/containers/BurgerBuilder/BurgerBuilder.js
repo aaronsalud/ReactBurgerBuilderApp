@@ -75,10 +75,6 @@ class BurgerBuilder extends Component {
                 price={this.props.totalPrice} />;
         }
 
-        // if (this.state.loading) {
-        //     orderSummary = <Spinner />;
-        // }
-
         return (
             <Wrapper>
                 <Modal show={this.state.checkingOut} modalClosed={this.purchaseCancelHandler}>
