@@ -78,6 +78,6 @@ export const initOrders = () => {
                 dispatch(fetchOrdersSuccess(fetchedOrders));
             }).catch(err => {
                 dispatch(fetchOrdersFailed(err));
-            })
+            });
     };
 };
