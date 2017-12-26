@@ -28,17 +28,29 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false
-            }
+            };
         case actionTypes.PURCHASE_BURGER_START:
+            return {
+                ...state,
+                loading: true
+            };
+        case actionTypes.FETCH_ORDERS_START:
             return {
                 ...state,
                 loading: true
             }
         case actionTypes.FETCH_ORDERS_SUCCESS:
-            return{
+            return {
                 ...state,
-                orders: action.orders
-            }
+                orders: action.orders,
+                loading: false
+            };
+        case actionTypes.FETCH_ORDERS_FAILED:
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            };
         default:
             return state;
     }
