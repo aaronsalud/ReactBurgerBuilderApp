@@ -11,7 +11,7 @@ const purchaseInit = (state, action) => {
     const updatedState = {
         purchased: false
     }
-    return updatedState(state, updatedState);
+    return updateState(state, updatedState);
 };
 
 const purchaseBurgerSuccess = (state, action) => {
