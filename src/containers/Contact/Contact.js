@@ -32,6 +32,7 @@ class Contact extends Component {
                 },
                 validation: {
                     required: true,
+                    isEmail: true
                 },
                 touched: false,
                 valid: false,
