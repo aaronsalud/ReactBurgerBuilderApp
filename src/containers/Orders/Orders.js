@@ -10,25 +10,25 @@ import * as actions from '../../store/actions/index';
 class Orders extends Component {
 
     componentDidMount() {
-        this.props.onInitOrders();
+        this.props.onInitOrders(this.props.token);
     }
 
     render() {
 
         let ordersView = (
-        <div>
-            {
-                this.props.orders.map(order => {
-                    return <Order key={order.id} ingredients={order.ingredients} price={order.price} />
-                })
-            }
-        </div>);
+            <div>
+                {
+                    this.props.orders.map(order => {
+                        return <Order key={order.id} ingredients={order.ingredients} price={order.price} />
+                    })
+                }
+            </div>);
 
-        if(this.props.loading){
+        if (this.props.loading) {
             ordersView = <Spinner />;
         }
 
-        if(this.props.error){
+        if (this.props.error) {
             ordersView = <p>ERROR: Failed to fetch orders data</p>
         }
 
@@ -40,13 +40,14 @@ const mapStateToProps = state => {
     return {
         orders: state.order.orders,
         loading: state.order.loading,
-        error: state.order.error
+        error: state.order.error,
+        token: state.auth.token
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitOrders: () => dispatch(actions.initOrders())
+        onInitOrders: (token) => dispatch(actions.initOrders(token))
     };
 };
 
