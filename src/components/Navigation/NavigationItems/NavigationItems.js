@@ -6,7 +6,7 @@ import Wrapper from '../../HOC/Wrapper/Wrapper';
 const navigationItems = (props) => {
     let authLinks = (
         <Wrapper>
-            <NavigationItem link="/auth">Authenticate</NavigationItem>
+            <NavigationItem link="/auth">Sign In</NavigationItem>
         </Wrapper>
     );
 
